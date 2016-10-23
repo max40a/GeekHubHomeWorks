@@ -125,8 +125,8 @@ public class MobileNumberValidator {
 
     private static int foundZero(char[] chars) {
         int index = 0;
-        for (Character string : chars) {
-            if (string == '0') {
+        for (char c : chars) {
+            if (c == '0') {
                 break;
             }
             ++index;
