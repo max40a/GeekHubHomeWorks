@@ -5,6 +5,8 @@ import java.util.Scanner;
 public class MobileNumberValidator {
 
     private final static int PREFIX_LENGTH = 3;
+    private final static int MAX_LENGTH_TELEPHONE_NUMBER = 13;
+    private final static int MIN_LENGTH_TELEPHONE_NUMBER = 10;
 
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
@@ -17,7 +19,7 @@ public class MobileNumberValidator {
             if (telephoneNumber[0] == '+') {
                 telephoneNumber = trimPlus(telephoneNumber);
             }
-        } while (!validator(telephoneNumber));
+        } while (!validate(telephoneNumber));
 
         int sum = sumArrays(telephoneNumber);
         int step = 1;
@@ -41,22 +43,30 @@ public class MobileNumberValidator {
     private static void printResult(int i) {
         if (i <= 4) {
             switch (i) {
-                case 1: System.out.println("One"); break;
-                case 2: System.out.println("Two"); break;
-                case 3: System.out.println("Three"); break;
-                case 4: System.out.println("Four"); break;
+                case 1:
+                    System.out.println("One");
+                    break;
+                case 2:
+                    System.out.println("Two");
+                    break;
+                case 3:
+                    System.out.println("Three");
+                    break;
+                case 4:
+                    System.out.println("Four");
+                    break;
             }
         } else {
             System.out.println(i);
         }
     }
 
-    private static boolean validator(char[] chars) {
+    private static boolean validate(char[] chars) {
         boolean state = false;
-        if (chars.length > 13 || chars.length < 10) {
+        if (chars.length > MAX_LENGTH_TELEPHONE_NUMBER || chars.length < MIN_LENGTH_TELEPHONE_NUMBER) {
             System.out.println("Phone number is incorrect. Please try again : ");
         } else {
-            if (validationCharacters(chars) && equalsPrefix(foundPrefix(chars))) {
+            if (validateCharacters(chars) && equalsPrefix(findPrefix(chars))) {
                 System.out.println("Phone number is correct.");
                 state = true;
             } else {
@@ -66,7 +76,7 @@ public class MobileNumberValidator {
         return state;
     }
 
-    private static boolean validationCharacters(char[] chars) {
+    private static boolean validateCharacters(char[] chars) {
         boolean state = true;
         for (char c : chars) {
             state = equalsPermittedChar(c);
@@ -109,8 +119,8 @@ public class MobileNumberValidator {
         return state;
     }
 
-    private static char[] foundPrefix(char[] chars) {
-        int start = foundZero(chars);
+    private static char[] findPrefix(char[] chars) {
+        int start = findZero(chars);
         if (start >= PREFIX_LENGTH) {
             return new char[]{'0'};
         }
@@ -123,7 +133,7 @@ public class MobileNumberValidator {
         return prefix;
     }
 
-    private static int foundZero(char[] chars) {
+    private static int findZero(char[] chars) {
         int index = 0;
         for (char c : chars) {
             if (c == '0') {
