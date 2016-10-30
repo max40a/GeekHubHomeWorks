@@ -10,16 +10,9 @@ public class Triangle implements Shape {
     private double sideA, sideB, sideC;
 
     public Triangle(double sideA, double sideB, double sideC) {
-        if (((sideA + sideB) < sideC) || (sideA + sideC) < sideB || (sideB + sideC) < sideA) {
-            System.out.println("Triangle with such given party can not exist!!!");
-            this.sideA = 0;
-            this.sideB = 0;
-            this.sideC = 0;
-        } else {
-            this.sideA = sideA;
-            this.sideB = sideB;
-            this.sideC = sideC;
-        }
+        this.sideA = sideA;
+        this.sideB = sideB;
+        this.sideC = sideC;
     }
 
     /*
@@ -38,6 +31,10 @@ public class Triangle implements Shape {
 
     public static double calculateHypotenuse(double a, double b) {
         return sqrt(pow(a, 2) + pow(b, 2));
+    }
+
+    public static boolean validateTriangleExistence(Triangle t) {
+        return !((t.sideA + t.sideB) < t.sideC || (t.sideA + t.sideC) < t.sideB || (t.sideB + t.sideC) < t.sideA);
     }
 
     @Override

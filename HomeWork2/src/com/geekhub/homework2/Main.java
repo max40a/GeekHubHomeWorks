@@ -94,7 +94,12 @@ public class Main {
         do {
             c = scanner.nextDouble();
         } while (!inputPositiveNumberValidate(c));
-        Shape.showResults(new Triangle(a, b, c));
+        Triangle triangle = new Triangle(a, b, c);
+        if (Triangle.validateTriangleExistence(triangle)) {
+            Shape.showResults(triangle);
+        } else {
+            System.out.println("Triangle with such given party can not exist!!!");
+        }
     }
 
     private static boolean inputPositiveNumberValidate(double a) {
