@@ -28,7 +28,7 @@ public class Main {
                 isExit = false;
             } else {
 
-                System.out.print("Enter the product prise : ");
+                System.out.print("Enter the " + productName + " prise : ");
                 prise = scanner.nextDouble();
                 System.out.println();
                 product = ProductCreator.productCreate(productName, prise);
