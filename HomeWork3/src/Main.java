@@ -1,66 +1,56 @@
-import manager.InventoryManager;
-import products.*;
+import products.interfaces.Product;
+import inventory.Inventory;
+import inventory.InventoryManager;
+import products.creator.ProductCreator;
 
-import java.util.*;
+import java.util.Scanner;
 
 public class Main {
 
-    private static final int numberOfProductsNames = 3;
     private static Scanner scanner = new Scanner(System.in);
 
     public static void main(String[] args) {
-
-        Map<String, List<IProduct>> productMap = new HashMap<>();
-        List<IProduct> sausageList = new ArrayList<>();
-        List<IProduct> breadList = new ArrayList<>();
-        List<IProduct> cheeseList = new ArrayList<>();
-
+        Inventory<Product> inventory = new Inventory<>();
+        Product product;
         String productName;
-        int quantity;
         double prise;
 
-        for (int i = 0; i < numberOfProductsNames; i++) {
-            System.out.println("Enter the name of product (valid product : Bread, Cheese, Sausage): ");
+        boolean isExit = true;
+        do {
+            System.out.println("Add the product to your inventory:\n\t\"Bread\"\n\t" +
+                    "\"Cheese\"\n\t\"Sausage\"\n\t\"q\" - Quit and print result.\n");
+            System.out.print("Chose : ");
             do {
                 productName = scanner.next();
-            } while (!validateInput(productName));
-            System.out.print("How much " + productName + " : ");
-            quantity = scanner.nextInt();
-            System.out.print("price : ");
-            prise = scanner.nextDouble();
-            switch (productName) {
-                case "Sausage":
-                    for (int j = 0; j < quantity; j++) {
-                        sausageList.add(new Sausage(prise));
-                    }
-                    productMap.put(productName, sausageList);
-                    break;
-                case "Bread":
-                    for (int j = 0; j < quantity; j++) {
-                        breadList.add(new Bread(prise));
-                    }
-                    productMap.put(productName, breadList);
-                    break;
-                case "Cheese":
-                    for (int j = 0; j < quantity; j++) {
-                        cheeseList.add(new Cheese(prise));
-                    }
-                    productMap.put(productName, cheeseList);
-                    break;
-            }
-        }
+            } while (!validateInputString(productName));
 
-        InventoryManager.printInventoryState(productMap);
+            if (productName.equals("q")) {
+                isExit = false;
+            } else {
+
+                System.out.print("Enter the product prise : ");
+                prise = scanner.nextDouble();
+                System.out.println();
+                product = ProductCreator.productCreate(productName, prise);
+                if (product != null) {
+                    inventory.addProduct(product);
+                }
+            }
+        } while (isExit);
+
+        InventoryManager manager = new InventoryManager(inventory);
+        System.out.println(manager.printResult());
     }
 
-    private static boolean validateInput(String s) {
-        switch (s) {
+    private static boolean validateInputString(String productName) {
+        switch (productName) {
             case "Bread":
             case "Cheese":
             case "Sausage":
+            case "q":
                 return true;
         }
-        System.out.println("Incorrect products. Permissible value : (Bread, Cheese, Sausage)");
+        System.out.println("Incorrect products. Permissible value : (Bread, Cheese, Sausage or \"q\" for exit and print result.)");
         return false;
     }
 }

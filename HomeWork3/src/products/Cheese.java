@@ -1,7 +1,7 @@
 package products;
 
-public class Cheese extends Product {
+public class Cheese extends AbstractProduct {
     public Cheese(double prise) {
-        super("Cheese", prise);
+        super("Cheese", 1 , prise);
     }
 }
