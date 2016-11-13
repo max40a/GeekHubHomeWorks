@@ -11,7 +11,7 @@ public class AbbreviationGenerator {
 
         StringBuilder abbr = new StringBuilder();
         abbr.append(word.charAt(0));
-        abbr.append(word.length()-2);
+        abbr.append(word.length() - 2);
         abbr.append(word.charAt(word.length() - 1));
 
         return abbr.toString();
