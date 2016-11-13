@@ -1,28 +1,17 @@
 package task2;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class AbbreviationGenerator {
 
-    public List<String> makeAbbreviation(List<String> list) {
-        List<String> temp = new ArrayList<>();
-        for (String s : list) {
-            temp.add(squeezeWord(s));
-        }
-        return temp;
-    }
-
-    private String squeezeWord(String s) {
-        if (s.length() <= 10) {
-            return s;
+    public static String squeezeWord(String word) {
+        if (word.length() <= 10) {
+            return word;
         }
 
-        StringBuilder result = new StringBuilder();
-        result.append(s.charAt(0));
-        result.append(String.valueOf(s.length() - 2));
-        result.append(s.charAt(s.length() - 1));
+        StringBuilder abbr = new StringBuilder();
+        abbr.append(word.charAt(0));
+        abbr.append(String.valueOf(word.length() - 2));
+        abbr.append(word.charAt(word.length() - 1));
 
-        return result.toString();
+        return abbr.toString();
     }
 }

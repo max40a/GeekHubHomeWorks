@@ -12,8 +12,6 @@ public class Main {
     private static final int MIN_LENGTH = 1;
 
     public static void main(String[] args) {
-        AbbreviationGenerator generator = new AbbreviationGenerator();
-
         Scanner scanner = new Scanner(System.in);
         List<String> listWords = new ArrayList<>();
         int countInputWords;
@@ -32,11 +30,11 @@ public class Main {
                 word = inputWord(scanner);
                 wrongWordInput = !word.equals("-1");
             } while (!wrongWordInput);
-            listWords.add(word);
+            listWords.add(AbbreviationGenerator.squeezeWord(word));
         }
 
         System.out.println("\n==== Result: ====");
-        generator.makeAbbreviation(listWords).forEach(System.out::println);
+        listWords.forEach(System.out::println);
     }
 
     private static int inputFirstNumber(Scanner scanner) {
@@ -50,7 +48,7 @@ public class Main {
         }
 
         if (result < MIN_LENGTH || result > MAX_LENGTH) {
-            System.err.printf("The number should be in the range between %d and %d\n!!!", MIN_LENGTH, MAX_LENGTH);
+            System.err.printf("The number should be in the range between %d and %d!!!\n", MIN_LENGTH, MAX_LENGTH);
             return -1;
         }
 

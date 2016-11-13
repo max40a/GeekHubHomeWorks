@@ -15,19 +15,14 @@ public class TaskManagerImpl implements TaskManager {
 
     @Override
     public void remove(LocalDateTime date) {
-        Iterator<LocalDateTime> iterator = taskStore.keySet().iterator();
-        while (iterator.hasNext()) {
-            if (iterator.next().equals(date)) {
-                iterator.remove();
-            }
-        }
+        taskStore.remove(date);
     }
 
     @Override
     public Set<String> getCategories() {
         Set<String> result = new TreeSet<>();
-        for (Map.Entry<LocalDateTime, Task> entry : taskStore.entrySet()) {
-            result.add(entry.getValue().getCategory());
+        for (Task task : taskStore.values()) {
+            result.add(task.getCategory());
         }
         return result;
     }
@@ -35,25 +30,19 @@ public class TaskManagerImpl implements TaskManager {
     @Override
     public Map<String, List<Task>> getTasksByCategories(String... categories) {
         Map<String, List<Task>> result = new TreeMap<>();
-        List<Task> temp;
+
         for (String category : categories) {
-            temp = new ArrayList<>();
-            for (Task task : taskStore.values()) {
-                if (task.getCategory().equals(category)) {
-                    temp.add(task);
-                }
-            }
-            result.put(category, temp);
+            result.put(category, getTasksByCategory(category));
         }
+
         return result;
     }
 
     @Override
     public List<Task> getTasksByCategory(String category) {
         List<Task> result = new ArrayList<>();
-        for (Map.Entry<LocalDateTime, Task> entry : taskStore.entrySet()) {
-            Task task = entry.getValue();
-            if (entry.getValue().getCategory().equals(category)) {
+        for (Task task : taskStore.values()) {
+            if (task.getCategory().equals(category)) {
                 result.add(task);
             }
         }
@@ -62,14 +51,14 @@ public class TaskManagerImpl implements TaskManager {
 
     @Override
     public List<Task> getTasksForToday() {
-        List<Task> result = new ArrayList<>();
-        LocalDate currentDay = LocalDate.now();
+        List<Task> tasksForToday = new ArrayList<>();
+        LocalDate today = LocalDate.now();
         for (Map.Entry<LocalDateTime, Task> entry : taskStore.entrySet()) {
-            LocalDateTime localDateTime = entry.getKey();
-            if (currentDay.isEqual(entry.getKey().toLocalDate())) {
-                result.add(taskStore.get(localDateTime));
+            LocalDateTime taskDate = entry.getKey();
+            if (today.isEqual(entry.getKey().toLocalDate())) {
+                tasksForToday.add(taskStore.get(taskDate));
             }
         }
-        return result;
+        return tasksForToday;
     }
 }
