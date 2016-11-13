@@ -4,7 +4,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.*;
 
-public class TaskManagerImp implements TaskManager {
+public class TaskManagerImpl implements TaskManager {
 
     private Map<LocalDateTime, Task> taskStore = new TreeMap<>();
 

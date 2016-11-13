@@ -25,12 +25,4 @@ public class Task {
     public void setCategory(String category) {
         this.category = category;
     }
-
-    @Override
-    public String toString() {
-        return "Task{" +
-                "name='" + name + '\'' +
-                ", category='" + category + '\'' +
-                '}';
-    }
 }
