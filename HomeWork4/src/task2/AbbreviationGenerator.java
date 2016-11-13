@@ -18,11 +18,11 @@ public class AbbreviationGenerator {
             return s;
         }
 
-        StringBuilder result = new StringBuilder();
-        result.append(s.charAt(0));
-        result.append(String.valueOf(s.length() - 2));
-        result.append(s.charAt(s.length() - 1));
+        StringBuilder builder = new StringBuilder();
+        builder.append(s.charAt(0));
+        builder.append(String.valueOf(s.length() - 2));
+        builder.append(s.charAt(s.length() - 1));
 
-        return result.toString();
+        return builder.toString();
     }
 }

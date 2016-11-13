@@ -6,7 +6,7 @@ import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class Main {
+public class Demo {
 
     private static final int MAX_LENGTH = 100;
     private static final int MIN_LENGTH = 1;

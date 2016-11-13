@@ -13,7 +13,7 @@ public interface TaskManager {
 
     Set<String> getCategories();
 
-    Map<String, List<Task>> getTasksByCategories(String... categories);
+    Map<String, List<Task>> getTasksByCategories(String[] categories);
 
     List<Task> getTasksByCategory(String category);
 
