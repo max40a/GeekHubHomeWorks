@@ -1,8 +1,6 @@
 package task1.source;
 
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.net.URL;
 
 /**
@@ -23,20 +21,10 @@ public class URLSourceProvider implements SourceProvider {
 
     @Override
     public String load(String pathToSource) throws SourceLoadingException {
-        StringBuilder urlLoadedResult = new StringBuilder();
-
         try {
-            URL url = new URL(pathToSource);
-            try (BufferedReader reader = new BufferedReader(new InputStreamReader(url.openStream()))) {
-                String input;
-                while ((input = reader.readLine()) != null) {
-                    urlLoadedResult.append(input);
-                }
-            }
+            return SourceUtils.toString(new URL(pathToSource).openStream());
         } catch (IOException e) {
             throw new SourceLoadingException("ULR at the specified address is not available.", e);
         }
-
-        return urlLoadedResult.toString();
     }
 }

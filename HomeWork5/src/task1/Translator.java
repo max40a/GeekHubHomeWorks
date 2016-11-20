@@ -6,7 +6,6 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import task1.source.URLSourceProvider;
 
-import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import java.io.ByteArrayInputStream;
 import java.io.UnsupportedEncodingException;
@@ -39,7 +38,11 @@ public class Translator {
      * @throws TranslateException
      */
     public String translate(String original) throws TranslateException {
-        return parseContent(original);
+        try {
+            return parseContent(original);
+        } catch (Exception e) {
+            throw new TranslateException(e);
+        }
     }
 
     /**
@@ -48,7 +51,7 @@ public class Translator {
      * @param text to translate
      * @return url for translation specified text
      */
-    private String prepareURL(String text) throws TranslateException {
+    private String prepareURL(String text) throws UnsupportedEncodingException {
         return "https://translate.yandex.net/api/v1.5/tr/translate?key=" + YANDEX_API_KEY + "&text=" + encodeText(text) + "&lang=" + TRANSLATION_DIRECTION;
     }
 
@@ -62,14 +65,11 @@ public class Translator {
 
         Document document;
         try {
-            DocumentBuilderFactory documentBuilderFactory = DocumentBuilderFactory.newInstance();
-            DocumentBuilder documentBuilder = documentBuilderFactory.newDocumentBuilder();
-
-            ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(urlSourceProvider.load(prepareURL(content)).getBytes());
-            document = documentBuilder.parse(byteArrayInputStream);
-            document.getDocumentElement().normalize();
+            document = DocumentBuilderFactory.newInstance()
+                    .newDocumentBuilder()
+                    .parse(new ByteArrayInputStream(urlSourceProvider.load(prepareURL(content)).getBytes()));
         } catch (Exception e) {
-            throw new TranslateException(e.getMessage() + "\nProblem with a parsing result.", e.getCause());
+            throw new TranslateException(e);
         }
 
         String parsedText = null;
@@ -90,11 +90,7 @@ public class Translator {
      * @param text to be translated
      * @return encoded text
      */
-    private String encodeText(String text) throws TranslateException {
-        try {
-            return URLEncoder.encode(text, "UTF-8");
-        } catch (UnsupportedEncodingException e) {
-            throw new TranslateException("Problem with a encoded original text.", e.getCause());
-        }
+    private String encodeText(String text) throws UnsupportedEncodingException {
+        return URLEncoder.encode(text, "UTF-8");
     }
 }

@@ -21,7 +21,7 @@ public class TranslatorController {
                 try {
                     source = sourceLoader.loadSource(command);
                 } catch (SourceLoadingException e) {
-                    throw new TranslateException(e.getMessage(), e.getCause());
+                    throw new TranslateException(e);
                 }
                 String translation = translator.translate(source);
 

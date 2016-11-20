@@ -1,9 +1,6 @@
 package task1.source;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
-import java.io.IOException;
+import java.io.*;
 
 /**
  * Implementation for loading content from local file system.
@@ -19,19 +16,10 @@ public class FileSourceProvider implements SourceProvider {
 
     @Override
     public String load(String pathToSource) throws SourceLoadingException {
-        StringBuilder fileLoadedResult = new StringBuilder();
-
-        try {
-            try (BufferedReader reader = new BufferedReader(new FileReader(pathToSource))) {
-                String input;
-                while ((input = reader.readLine()) != null) {
-                    fileLoadedResult.append(input);
-                }
-            }
+        try{
+            return SourceUtils.toString(new FileInputStream(pathToSource));
         } catch (IOException e) {
             throw new SourceLoadingException("File read error : file not found.", e);
         }
-
-        return fileLoadedResult.toString();
     }
 }
