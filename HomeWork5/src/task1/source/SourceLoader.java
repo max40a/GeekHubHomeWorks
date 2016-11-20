@@ -18,19 +18,10 @@ public class SourceLoader {
     }
 
     public String loadSource(String pathToSource) throws SourceLoadingException {
-        Matcher featureLink = Pattern.compile("^(ht|f)tp(s?)://[-a-z0-9._/]+$").matcher(pathToSource);
-        Matcher featureFilePath = Pattern.compile("^([a-zA-Z]:)?(\\\\[^<>:\"/\\\\|?*]+)+\\\\?$").matcher(pathToSource);
-
-        if (featureLink.find()) {
-            if (sourceProviders.get(0).isAllowed(pathToSource)) {
-                return sourceProviders.get(0).load(pathToSource);
+        for (SourceProvider source : sourceProviders) {
+            if(source.isAllowed(pathToSource)) {
+                return source.load(pathToSource);
             }
-        } else if (featureFilePath.find()) {
-            if (sourceProviders.get(1).isAllowed(pathToSource)) {
-                return sourceProviders.get(1).load(pathToSource);
-            }
-        } else {
-            throw new SourceLoadingException("Entered an incorrect address of a resource.");
         }
         return null;
     }
