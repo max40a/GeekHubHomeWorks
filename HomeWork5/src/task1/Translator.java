@@ -4,10 +4,14 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
+import org.xml.sax.SAXException;
+import task1.source.SourceLoadingException;
 import task1.source.URLSourceProvider;
 
 import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
 import java.io.ByteArrayInputStream;
+import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 
@@ -61,16 +65,10 @@ public class Translator {
      * @param content that was received from Yandex Translate API by invoking prepared URL
      * @return translated tex
      */
-    private String parseContent(String content) throws TranslateException {
-
-        Document document;
-        try {
-            document = DocumentBuilderFactory.newInstance()
-                    .newDocumentBuilder()
-                    .parse(new ByteArrayInputStream(urlSourceProvider.load(prepareURL(content)).getBytes()));
-        } catch (Exception e) {
-            throw new TranslateException(e);
-        }
+    private String parseContent(String content) throws ParserConfigurationException, IOException, SourceLoadingException, SAXException {
+        Document document = DocumentBuilderFactory.newInstance()
+                .newDocumentBuilder()
+                .parse(new ByteArrayInputStream(urlSourceProvider.load(prepareURL(content)).getBytes()));
 
         String parsedText = null;
         NodeList nodeList = document.getElementsByTagName("text");
