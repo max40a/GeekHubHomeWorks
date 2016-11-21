@@ -3,21 +3,19 @@ package task2.archivator;
 import java.io.File;
 import java.util.*;
 
-public class DirTreeList {
+public class AllDirectoriesFilesFinder {
 
-    private String dirName;
+    private File startDirectory;
 
-    public DirTreeList(String dirName) {
-        this.dirName = dirName;
+    public AllDirectoriesFilesFinder(File startDirectory) {
+        this.startDirectory = startDirectory;
     }
 
     public List<File> getAllFilesByDirectory() {
-        File rootDir = new File(dirName);
-
         List<File> files = new ArrayList<>();
         Queue<File> fileTree = new PriorityQueue<>();
 
-        Collections.addAll(fileTree, rootDir.listFiles());
+        Collections.addAll(fileTree, startDirectory.listFiles());
 
         while (!fileTree.isEmpty()) {
             File currentFile = fileTree.remove();
