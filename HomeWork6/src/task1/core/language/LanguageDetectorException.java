@@ -1,4 +1,4 @@
-package core.language;
+package task1.core.language;
 
 public class LanguageDetectorException extends Exception {
 

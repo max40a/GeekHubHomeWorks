@@ -1,6 +1,6 @@
-package core;
+package task1.core;
 
-import core.language.Language;
+import task1.core.language.Language;
 
 public class Translation {
 

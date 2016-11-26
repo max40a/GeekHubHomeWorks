@@ -1,4 +1,4 @@
-package core.language;
+package task1.core.language;
 
 import java.io.IOException;
 

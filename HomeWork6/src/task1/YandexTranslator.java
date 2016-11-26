@@ -1,15 +1,17 @@
-import core.Translation;
-import core.TranslationRequest;
-import core.Translator;
-import core.TranslatorException;
-import core.language.Language;
-import core.language.LanguageDetector;
-import core.language.LanguageDetectorException;
-import core.language.UnknownLanguageException;
+package task1;
+
+import task1.core.Translation;
+import task1.core.TranslationRequest;
+import task1.core.Translator;
+import task1.core.TranslatorException;
+import task1.core.language.Language;
+import task1.core.language.LanguageDetector;
+import task1.core.language.LanguageDetectorException;
+import task1.core.language.UnknownLanguageException;
 import org.json.JSONArray;
 import org.json.JSONObject;
-import util.EncodingUtils;
-import util.IOUtils;
+import task1.util.EncodingUtils;
+import task1.util.IOUtils;
 
 import java.io.IOException;
 import java.net.URL;
@@ -49,7 +51,7 @@ public class YandexTranslator implements Translator {
                     translationRequest.getTargetLanguage());
 
         } catch (IOException | LanguageDetectorException | UnknownLanguageException e) {
-            throw new TranslatorException(e.getMessage());
+            throw new TranslatorException(e);
         }
     }
 

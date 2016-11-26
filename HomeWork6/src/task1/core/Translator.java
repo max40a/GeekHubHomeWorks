@@ -1,4 +1,4 @@
-package core;
+package task1.core;
 
 public interface Translator {
 
