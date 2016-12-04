@@ -5,6 +5,7 @@ import java.util.function.BinaryOperator;
 import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.function.Predicate;
+import java.util.stream.Collectors;
 
 public class CollectionUtils {
 
@@ -52,29 +53,25 @@ public class CollectionUtils {
     }
 
     public static <E> Optional<E> max(List<E> elements, Comparator<E> comparator) {
-        E maxElement = elements.get(0);
-        for (int i = 1; i < elements.size(); i++) {
-            if (comparator.compare(elements.get(i), maxElement) > 0) {
-                maxElement = elements.get(i);
-            }
-        }
-        if (maxElement == null) {
+        if (elements.isEmpty()) {
             return Optional.empty();
+        }
+
+        E maxElement = elements.get(0);
+        for (E element : elements) {
+            if (comparator.compare(element, maxElement) > 0) {
+                maxElement = element;
+            }
         }
         return Optional.of(maxElement);
     }
 
     public static <E> Optional<E> min(List<E> elements, Comparator<E> comparator) {
-        E minElement = elements.get(0);
-        for (int i = 1; i < elements.size(); i++) {
-            if (comparator.compare(elements.get(i), minElement) < 0) {
-                minElement = elements.get(i);
-            }
-        }
-        if (minElement == null) {
+        if (elements.isEmpty()) {
             return Optional.empty();
         }
-        return Optional.of(minElement);
+
+        return max(elements, comparator.reversed());
     }
 
     public static <E> List<E> distinct(List<E> elements) {
@@ -97,21 +94,24 @@ public class CollectionUtils {
     }
 
     public static <E> Optional<E> reduce(List<E> elements, BinaryOperator<E> accumulator) {
-        E returnedValue = elements.get(0);
-        for (int i = 1; i < elements.size(); i++) {
-            returnedValue = accumulator.apply(returnedValue, elements.get(i));
-        }
-        if (returnedValue == null) {
+        if (elements.isEmpty()) {
             return Optional.empty();
+        }
+
+        E returnedValue = elements.get(0);
+        for (E element : elements) {
+            returnedValue = accumulator.apply(returnedValue, element);
         }
         return Optional.of(returnedValue);
     }
 
     public static <E> E reduce(E seed, List<E> elements, BinaryOperator<E> accumulator) {
+        E result = seed;
+
         for (E element : elements) {
-            seed = accumulator.apply(seed, element);
+            result = accumulator.apply(result, element);
         }
-        return seed;
+        return result;
     }
 
     public static <E> Map<Boolean, List<E>> partitionBy(List<E> elements, Predicate<E> predicate) {
@@ -156,18 +156,14 @@ public class CollectionUtils {
                                             BinaryOperator<U> mergeFunction) {
         Map<K, U> returnedMap = new HashMap<>();
 
-        U mergedValue;
-        U returnedValue;
         for (T element : elements) {
             K key = keyFunction.apply(element);
             U value = valueFunction.apply(element);
 
-            returnedValue = returnedMap.get(key);
-            if (returnedValue == null) {
-                returnedMap.put(key, value);
+            if (returnedMap.containsKey(key)) {
+                returnedMap.put(key, mergeFunction.apply(returnedMap.get(key), value));
             } else {
-                mergedValue = mergeFunction.apply(returnedValue, value);
-                returnedMap.put(key, mergedValue);
+                returnedMap.put(key, value);
             }
         }
 
