@@ -38,25 +38,22 @@ public class BeanComparator {
             return;
         }
 
-        Field[] fieldsOfObject1 = getFields(o1);
-        Field[] fieldsOfObject2 = getFields(o2);
-
-        int minLength = Math.min(fieldsOfObject1.length, fieldsOfObject2.length);
+        Field[] fieldsOfObject = getFields(o1);
 
         StringBuilder tableOfCompare = new StringBuilder();
-        for (int i = 0; i < minLength; i++) {
-            if (fieldsOfObject1[i].isAnnotationPresent(Ignore.class)) {
+        for (int i = 0; i < fieldsOfObject.length; i++) {
+            if (fieldsOfObject[i].isAnnotationPresent(Ignore.class)) {
                 continue;
             } else {
-                boolean resultOfCompareCurrentField = compareFields(fieldsOfObject1[i], fieldsOfObject2[i], o1, o2);
+                boolean resultOfCompareCurrentField = compareFields(fieldsOfObject[i], o1, o2);
 
-                tableOfCompare.append(fieldsOfObject1[i].getName());
+                tableOfCompare.append(fieldsOfObject[i].getName());
                 tableOfCompare.append(" - ");
-                tableOfCompare.append(fieldsOfObject1[i].get(o1));
+                tableOfCompare.append(fieldsOfObject[i].get(o1));
                 tableOfCompare.append(" :: ");
-                tableOfCompare.append(fieldsOfObject2[i].getName());
+                tableOfCompare.append(fieldsOfObject[i].getName());
                 tableOfCompare.append(" - ");
-                tableOfCompare.append(fieldsOfObject2[i].get(o2));
+                tableOfCompare.append(fieldsOfObject[i].get(o2));
                 tableOfCompare.append(" is ");
                 tableOfCompare.append(resultOfCompareCurrentField);
                 tableOfCompare.append("\n");
@@ -72,8 +69,8 @@ public class BeanComparator {
         return fieldsArray;
     }
 
-    private static boolean compareFields(Field f1, Field f2, Object o1, Object o2) throws IllegalAccessException {
-        return f1.get(o1).equals(f2.get(o2));
+    private static boolean compareFields(Field f, Object o1, Object o2) throws IllegalAccessException {
+        return f.get(o1).equals(f.get(o2));
     }
 
     private static void printResult(StringBuilder sb) {
