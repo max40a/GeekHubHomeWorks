@@ -91,9 +91,7 @@ public class JsonSerializer {
             } else if (field.isAnnotationPresent(UseDataAdapter.class)) {
                 UseDataAdapter annotation = field.getAnnotation(UseDataAdapter.class);
                 JSONDataAdapter adapter = annotation.value().newInstance();
-                if (null != adapter) {
-                    resultMap.put(field.getName(), adapter.toJson(field.get(o)));
-                }
+                resultMap.put(field.getName(), adapter.toJson(field.get(o)));
             } else {
                 resultMap.put(field.getName(), field.get(o));
             }
