@@ -1,6 +1,8 @@
 package task1.json.adapter;
 
+import org.json.JSONArray;
 import org.json.JSONException;
+import task1.json.JsonSerializer;
 
 import java.util.Collection;
 
@@ -12,17 +14,10 @@ public class CollectionAdapter implements JSONDataAdapter<Collection> {
 
     @Override
     public Object toJson(Collection o) throws JSONException {
-        if (o.size() == 0) {
-            return "[]";
+        JSONArray result = new JSONArray();
+        for(Object object : o) {
+            result.put(JsonSerializer.serialize(object));
         }
-        StringBuilder result = new StringBuilder("[");
-        for (Object element : o) {
-            result.append(element);
-            result.append(",");
-        }
-        result.delete(result.length() - 1, result.length());
-        result.append("]");
-
-        return result.toString();
+        return result;
     }
 }
