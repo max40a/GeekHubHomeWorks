@@ -90,7 +90,7 @@ public class DatabaseStorage {
                 "  sum(SALARY.VALUE)" +
                 " FROM EMPLOYEE INNER JOIN SALARY" +
                 "    ON EMPLOYEE.id = SALARY.EMP_ID" +
-                " GROUP BY EMPLOYEE.NAME;";
+                " GROUP BY EMPLOYEE.NAME, EMPLOYEE.ID;";
 
         try (Statement statement = connection.createStatement()) {
             ResultSet rs = statement.executeQuery(sql);

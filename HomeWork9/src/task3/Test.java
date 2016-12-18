@@ -27,11 +27,13 @@ public class Test {
         Employee inna = new Employee("Inna");
         Employee andrey = new Employee("Andrey");
         Employee ivan = new Employee("Ivan");
+        Employee ivan1 = new Employee("Ivan");
 
         storage.insertEmployee(victor);
         storage.insertEmployee(inna);
         storage.insertEmployee(andrey);
         storage.insertEmployee(ivan);
+        storage.insertEmployee(ivan1);
 
         List<Salary> salaryList = new ArrayList<>();
         Collections.addAll(salaryList,
@@ -49,7 +51,9 @@ public class Test {
                 new Salary(ivan, LocalDate.now(), 100.00),
                 new Salary(ivan, LocalDate.now(), 100.00),
                 new Salary(ivan, LocalDate.now(), 150.00),
-                new Salary(ivan, LocalDate.now(), 250.00)
+                new Salary(ivan, LocalDate.now(), 250.00),
+                new Salary(ivan1, LocalDate.now(), 50.00),
+                new Salary(ivan1, LocalDate.now(), 50.00)
         );
 
         for (Salary salary: salaryList) {
