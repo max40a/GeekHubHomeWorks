@@ -10,15 +10,15 @@ public class URLCrawler {
 
     private ExecutorService executorService = Executors.newFixedThreadPool(NUMBER_OF_THREADS);
     private String folder;
-    private String pathToSource;
+    private String pathToSourceFile;
 
-    public URLCrawler(String folder, String pathToSource) {
+    public URLCrawler(String folder, String pathToSourceFile) {
         this.folder = folder;
-        this.pathToSource = pathToSource;
+        this.pathToSourceFile = pathToSourceFile;
     }
 
     public void getHashMd5ForURL() {
-        Collection<URL> urlCollection = URLListGenerator.getUrlList(pathToSource);
+        Collection<URL> urlCollection = URLListGenerator.getUrlList(pathToSourceFile);
         for (URL url : urlCollection) {
             executorService.execute(new Task(url, folder));
         }
