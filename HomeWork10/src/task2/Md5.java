@@ -11,7 +11,7 @@ public class Md5 {
     private String hashText;
 
     public String getMD5HashSum(URL url) throws NoSuchAlgorithmException, IOException {
-        final MessageDigest messageDigest = MessageDigest.getInstance("MD5");
+        MessageDigest messageDigest = MessageDigest.getInstance("MD5");
         messageDigest.reset();
         messageDigest.update(getContent(url).getBytes());
 
