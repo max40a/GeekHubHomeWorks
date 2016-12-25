@@ -11,7 +11,7 @@ public class Task implements Runnable{
     private String folder;
     private Md5 md5;
 
-    private String fileName = "hash_code.txt";
+    private String terminationFile = "hash_code.txt";
 
     public Task(URL url, String folder) {
         this.url = url;
@@ -21,7 +21,7 @@ public class Task implements Runnable{
 
     @Override
     public void run() {
-        String pathToFile = folder + "\\" + buildFileName(url) + "_" + fileName;
+        String pathToFile = folder + "\\" + buildFileName(url) + "_" + terminationFile;
         try(FileWriter writer = new FileWriter(pathToFile)) {
             writer.write(md5.getMD5HashSum(url));
         }catch (IOException | NoSuchAlgorithmException e) {

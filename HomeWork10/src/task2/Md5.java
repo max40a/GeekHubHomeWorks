@@ -26,6 +26,6 @@ public class Md5 {
     }
 
     private String getContent(URL url) throws IOException {
-        return IOUtils.getSiteHTMLContent(url.openStream());
+        return ConnectionUtils.getSiteHTMLContent(url);
     }
 }

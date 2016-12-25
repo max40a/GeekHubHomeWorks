@@ -18,7 +18,7 @@ public class URLCrawler {
     }
 
     public void getHashMd5ForURL() {
-        Collection<URL> urlCollection = IOUtils.getUrlList(pathToSource);
+        Collection<URL> urlCollection = URLListGenerator.getUrlList(pathToSource);
         for (URL url : urlCollection) {
             executorService.execute(new Task(url, folder));
         }

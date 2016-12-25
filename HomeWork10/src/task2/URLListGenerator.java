@@ -5,7 +5,7 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.Collection;
 
-public class IOUtils {
+public class URLListGenerator {
 
     public static Collection<URL> getUrlList(String pathToSourceURLFile) {
         Collection<URL> urlCollection = new ArrayList<>();
@@ -20,19 +20,5 @@ public class IOUtils {
         }
 
         return urlCollection;
-    }
-
-
-    public static String getSiteHTMLContent(InputStream inputStream) throws IOException {
-        StringBuilder source = new StringBuilder();
-
-        try (BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream))) {
-            String line;
-            while ((line = reader.readLine()) != null) {
-                source.append(line);
-            }
-        }
-
-        return source.toString();
     }
 }
